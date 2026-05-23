@@ -1,0 +1,54 @@
+{
+  "items": [
+    {
+      "name": "Срібний кулон з місячним каменем",
+      "category": "diamond",
+      "price": "1600 грн",
+      "star": "purple",
+      "photo": "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=600",
+      "description": "Срібло 925, натуральний місячний камінь. Найбільше мрію саме про цей!",
+      "links": ["https://example.com/moonstone-pendant"]
+    },
+    {
+      "name": "Колода Таро Rider-Waite",
+      "category": "amethyst",
+      "price": "1100 грн",
+      "star": "purple",
+      "description": "Класична колода, бажано в подарунковій коробці.",
+      "links": ["https://example.com/tarot"]
+    },
+    {
+      "name": "Аромасвічка «Опівнічний ліс»",
+      "category": "moonstone",
+      "price": "750 грн",
+      "star": "",
+      "description": "Соєвий віск, дерев'яний ґніт. Аромат: кедр, ладан, мох.",
+      "links": []
+    },
+    {
+      "name": "Набір трав'яного чаю",
+      "category": "sapphire",
+      "price": "480 грн",
+      "star": "yellow",
+      "links": ["https://example.com/herbal-tea"]
+    },
+    {
+      "name": "Шовкова стрічка для волосся",
+      "category": "tourmaline",
+      "price": "320 грн",
+      "description": "Колір: лавандовий або сріблястий."
+    },
+    {
+      "name": "Зошит у твердій палітурці",
+      "category": "quartz",
+      "price": "180 грн",
+      "star": "purple",
+      "description": "З крафтовим папером, для нотаток та скетчів."
+    },
+    {
+      "name": "Набір наліпок з місяцями",
+      "category": "pebble",
+      "price": "85 грн"
+    }
+  ]
+}
