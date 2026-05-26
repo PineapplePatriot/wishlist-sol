@@ -260,6 +260,38 @@ function Sigil({ color, active }) {
   );
 }
 
+/* filigree flourish that sits on the top edge of each category card */
+function TopOrnament({ color, accent, active }) {
+  return (
+    <div style={{
+      position: "absolute", top: -1, left: "50%", transform: "translateX(-50%)",
+      pointerEvents: "none", lineHeight: 0,
+      filter: active ? `drop-shadow(0 0 6px ${color})` : "none",
+      transition: "filter 0.4s ease",
+    }}>
+      <svg width="180" height="26" viewBox="0 0 180 26">
+        {/* mirrored scrolling curls sweeping outward from center */}
+        <path d="M90 13 C 76 13, 70 4, 56 6 C 44 8, 40 16, 28 14 C 20 13, 16 8, 8 11"
+          fill="none" stroke={color} strokeWidth="1.1" strokeOpacity="0.7" strokeLinecap="round" />
+        <path d="M90 13 C 104 13, 110 4, 124 6 C 136 8, 140 16, 152 14 C 160 13, 164 8, 172 11"
+          fill="none" stroke={color} strokeWidth="1.1" strokeOpacity="0.7" strokeLinecap="round" />
+        {/* inner shorter accent curls */}
+        <path d="M90 13 C 80 13, 76 8, 66 10" fill="none" stroke={accent} strokeWidth="0.7" strokeOpacity="0.5" strokeLinecap="round" />
+        <path d="M90 13 C 100 13, 104 8, 114 10" fill="none" stroke={accent} strokeWidth="0.7" strokeOpacity="0.5" strokeLinecap="round" />
+        {/* tiny end dots */}
+        <circle cx="8" cy="11" r="1.4" fill={color} fillOpacity="0.7" />
+        <circle cx="172" cy="11" r="1.4" fill={color} fillOpacity="0.7" />
+        {/* center diamond gem */}
+        <g style={{ transformOrigin: "90px 13px", transform: active ? "scale(1.15)" : "scale(1)", transition: "transform 0.4s ease" }}>
+          <polygon points="90,3 97,13 90,23 83,13" fill={color} fillOpacity="0.9" stroke={accent} strokeWidth="0.6" />
+          <polygon points="90,3 97,13 90,13 83,13" fill={accent} fillOpacity="0.85" />
+          <line x1="90" y1="13" x2="90" y2="23" stroke={accent} strokeWidth="0.4" strokeOpacity="0.5" />
+        </g>
+      </svg>
+    </div>
+  );
+}
+
 /* ── Main App ── */
 
 export default function App() {
@@ -494,6 +526,10 @@ export default function App() {
         @keyframes witchFly{0%{transform:translateX(-140px)}100%{transform:translateX(calc(100vw + 140px))}}
         @keyframes titleShimmer{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
         .cat-card{cursor:pointer;transition:all 0.3s ease;position:relative}.cat-card:hover{transform:translateY(-3px);box-shadow:0 14px 44px rgba(20,8,40,0.6)}
+        .cat-card::before,.cat-card::after{content:"";position:absolute;width:16px;height:16px;border:1px solid var(--corner,rgba(169,120,232,0.4));opacity:0.6;transition:opacity 0.3s ease,width 0.3s ease,height 0.3s ease;pointer-events:none}
+        .cat-card::before{top:9px;left:9px;border-right:none;border-bottom:none;border-top-left-radius:6px}
+        .cat-card::after{bottom:9px;right:9px;border-left:none;border-top:none;border-bottom-right-radius:6px}
+        .cat-card:hover::before,.cat-card:hover::after{opacity:1;width:20px;height:20px}
         .item-card{transition:all 0.2s ease}.item-card:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(20,8,40,0.5)}
         .btn{cursor:pointer;transition:all 0.2s ease}.btn:hover{filter:brightness(1.15);transform:translateY(-1px)}.btn:active{transform:translateY(0)}
         .link-pill:hover{filter:brightness(1.2)}
@@ -551,8 +587,9 @@ export default function App() {
                 onClick={() => setActiveCategory(isOpen ? null : cat.id)}
                 onMouseEnter={() => setHoveredCat(cat.id)}
                 onMouseLeave={() => setHoveredCat(null)}
-                style={{ ...st.catCard, borderColor: isOpen ? cat.color : isHov ? cat.accent : cat.border, background: isOpen ? cat.bg : isHov ? `rgba(${hexRgb(cat.color)},0.05)` : "rgba(255,255,255,0.02)" }}>
+                style={{ ...st.catCard, "--corner": cat.border, borderColor: isOpen ? cat.color : isHov ? cat.accent : cat.border, background: isOpen ? cat.bg : isHov ? `rgba(${hexRgb(cat.color)},0.05)` : "rgba(255,255,255,0.02)" }}>
                 <Sigil color={cat.color} active={isHov || isOpen} />
+                <TopOrnament color={cat.color} accent={cat.accent} active={isHov || isOpen} />
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
                     <div style={{ "--glow": cat.color, animation: isOpen ? "glowPulse 3s ease infinite" : "none", transition: "all 0.3s" }}>
@@ -852,8 +889,8 @@ const st = {
   smallBtn: { background: "rgba(169,120,232,0.15)", border: "1px solid rgba(169,120,232,0.3)", borderRadius: 8, padding: "7px 16px", color: "#cdb8ff", fontSize: 13, fontWeight: 600 },
   chipBtn: { background: "rgba(169,120,232,0.1)", border: "1px solid rgba(169,120,232,0.25)", borderRadius: 20, padding: "7px 16px", color: "#cdb8ff", fontSize: 13, fontWeight: 600 },
   code: { background: "rgba(169,120,232,0.12)", border: "1px solid rgba(169,120,232,0.2)", borderRadius: 5, padding: "1px 6px", fontSize: 12, color: "#cdb8ff", fontFamily: "monospace" },
-  main: { maxWidth: 760, margin: "0 auto", padding: "0 16px 40px", display: "flex", flexDirection: "column", gap: 12, position: "relative", zIndex: 2 },
-  catCard: { padding: "20px 24px", borderRadius: 18, border: "1px solid", transition: "all 0.3s ease", backdropFilter: "blur(2px)" },
+  main: { maxWidth: 860, margin: "0 auto", padding: "0 16px 40px", display: "flex", flexDirection: "column", gap: 14, position: "relative", zIndex: 2 },
+  catCard: { padding: "26px 28px 20px", borderRadius: 18, border: "1px solid", transition: "all 0.3s ease", backdropFilter: "blur(2px)", position: "relative", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.04)" },
   catName: { fontFamily: "'Cinzel',serif", fontSize: 26, fontWeight: 700, lineHeight: 1.2, letterSpacing: 0.5 },
   catSubtitle: { color: "#776e90", fontSize: 14, fontStyle: "italic", marginTop: 2, fontFamily: "'Cormorant Garamond',serif" },
   catPrice: { fontSize: 15, fontWeight: 600, marginTop: 4, letterSpacing: 0.5 },
