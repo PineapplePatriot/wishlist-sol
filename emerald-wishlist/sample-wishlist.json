@@ -1,0 +1,50 @@
+{
+  "items": [
+    {
+      "name": "Шовкова піжама",
+      "category": "oligarch",
+      "price": "1400 грн",
+      "star": "top",
+      "photo": "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=600",
+      "description": "Смарагдова, розмір S.",
+      "links": ["https://example.com/pajamas"]
+    },
+    {
+      "name": "Кавомашина для дому",
+      "category": "oligarch",
+      "price": "1500 грн",
+      "star": "want",
+      "description": "Можна скинутися разом!",
+      "group_gift": true,
+      "group_slots": 4
+    },
+    {
+      "name": "Аромасвічка «Ліс після дощу»",
+      "category": "yacht",
+      "price": "750 грн",
+      "links": ["https://example.com/candle"]
+    },
+    {
+      "name": "Книга в подарунковому виданні",
+      "category": "success",
+      "price": "520 грн",
+      "star": "top"
+    },
+    {
+      "name": "Набір трав'яного чаю",
+      "category": "middle",
+      "price": "320 грн",
+      "star": "want"
+    },
+    {
+      "name": "Зошит у твердій палітурці",
+      "category": "payday",
+      "price": "180 грн"
+    },
+    {
+      "name": "Наліпки з котиками",
+      "category": "buckwheat",
+      "price": "85 грн"
+    }
+  ]
+}
