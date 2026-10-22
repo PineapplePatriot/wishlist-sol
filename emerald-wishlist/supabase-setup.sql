@@ -34,6 +34,8 @@ create table if not exists public.settings (
   event_date timestamptz,
   updated_at timestamptz not null default now()
 );
+-- added later; "add column if not exists" also upgrades an existing database
+alter table public.settings add column if not exists show_countdown boolean not null default true;
 insert into public.settings (id) values (1) on conflict (id) do nothing;
 alter table public.settings enable row level security;
 

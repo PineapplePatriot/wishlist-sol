@@ -30,7 +30,7 @@ export default function Header({ settings, myCount, nickname }) {
       <div className="ornament"><span>✦ ◆ ✦</span></div>
       <h1 className="title fade-up">{settings?.title || "Список Бажань"}</h1>
       {settings?.subtitle && <p className="subtitle fade-up">{settings.subtitle}</p>}
-      <Countdown date={settings?.event_date} />
+      {settings?.show_countdown !== false && <Countdown date={settings?.event_date} />}
 
       <p className="header-note">
         Обери свій рівень заможності (чесно чи не дуже) та забронюй подарунок.<br />
