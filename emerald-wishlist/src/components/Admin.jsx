@@ -165,13 +165,14 @@ export function SettingsModal({ settings, onClose, showToast }) {
   const [title, setTitle] = useState(settings?.title || "");
   const [subtitle, setSubtitle] = useState(settings?.subtitle || "");
   const [date, setDate] = useState(toLocalInput(settings?.event_date));
+  const [showCountdown, setShowCountdown] = useState(settings?.show_countdown !== false);
   const [busy, setBusy] = useState(false);
 
   const submit = async (e) => {
     e.preventDefault();
     setBusy(true);
     try {
-      await saveSettings({ title: title.trim() || "Список Бажань", subtitle: subtitle.trim(), event_date: date ? new Date(date).toISOString() : null });
+      await saveSettings({ title: title.trim() || "Список Бажань", subtitle: subtitle.trim(), event_date: date ? new Date(date).toISOString() : null, show_countdown: showCountdown });
       showToast("Налаштування збережено ✨");
       onClose();
     } catch (err) { showToast(err.message, "error"); }
@@ -183,12 +184,20 @@ export function SettingsModal({ settings, onClose, showToast }) {
       <form onSubmit={submit}>
         <Field label="Заголовок"><input className="input" value={title} onChange={e => setTitle(e.target.value)} placeholder="Список Бажань" /></Field>
         <Field label="Підзаголовок"><input className="input" value={subtitle} onChange={e => setSubtitle(e.target.value)} placeholder="до 25-го дня народження" /></Field>
-        <Field label="Дата і час свята" hint="Для відліку у шапці. Порожньо — відлік сховано.">
+        <Field label="Дата і час свята">
           <div className="row" style={{ flexWrap: "nowrap" }}>
             <input className="input" type="datetime-local" value={date} onChange={e => setDate(e.target.value)} />
             {date && <button type="button" className="btn btn-quiet btn-sm" onClick={() => setDate("")}>очистити</button>}
           </div>
         </Field>
+        <Toggle
+          checked={showCountdown}
+          onChange={setShowCountdown}
+          title="⏳ Показувати відлік"
+          desc={!date ? "Спершу вкажіть дату — без неї відліку не буде."
+            : showCountdown ? "Гості бачать у шапці, скільки днів лишилося до свята."
+            : "Відлік сховано. Дата збережеться — можна увімкнути будь-коли."}
+        />
         <div className="modal-actions">
           <button type="button" className="btn btn-quiet" onClick={onClose}>Скасувати</button>
           <button type="submit" className="btn btn-gold" disabled={busy}>{busy ? "Зберігаємо…" : "Зберегти"}</button>

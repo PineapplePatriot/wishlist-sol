@@ -20,7 +20,7 @@ Built with **Vite + React**, data in **Supabase**, hosted on **Vercel**.
 | **🤝 Chip in together** | Owner marks a gift as a group gift (optionally "needs N people"). Guests join; a progress bar shows "2 з 4 учасників". |
 | **Basket** | Add several gifts, book them all at once. |
 | **Cancel** | Guests can cancel their own booking **from the same phone/browser** they booked on. The owner can remove any booking. |
-| **Countdown** | Owner sets the date & time in ⚙️ Налаштування; the header counts down. |
+| **Countdown** | Optional. Owner sets the date & time in ⚙️ Налаштування and can hide/show the timer with a switch (the date stays saved). |
 | **Photo upload** | Owner uploads gift photos straight from phone/computer (stored in Supabase Storage). Pasting an image link still works. |
 | **JSON import/export** | Bulk add or replace the whole list; files from the old witch wishlist also import (old tier names fall back to "Стабільний середній клас"). |
 | **Link preview** | Nice image + title when the link is shared in Telegram / Instagram / Viber (`public/og.png`, texts in `index.html`). |
@@ -82,7 +82,17 @@ npm run dev                 # opens http://localhost:5173
 
 ### 3. Vercel (the hosting) — ~5 min
 Both wishlists live in this one GitHub repo, each in its own folder, and each
-gets **its own Vercel project**.
+gets **its own Vercel project**. The "Root Directory" setting is what tells a
+project which folder (= which site) to build:
+
+| Vercel project | Root Directory |
+|---|---|
+| witch wishlist (existing) | `witch-wishlist` |
+| emerald wishlist (new) | `emerald-wishlist` |
+
+If a build fails with *"The specified Root Directory … does not exist"*, that
+setting points at an old folder name: *Project → Settings → Build and Deployment →
+Root Directory* → fix it → *Deployments → ⋯ → Redeploy*.
 1. **vercel.com → Add New… → Project → Import** the `wishlist-sol` repo.
 2. **Root Directory → Edit → choose `emerald-wishlist`.** (This is the important bit —
    it tells Vercel which site in the repo to build.) Framework: Vite (auto).
@@ -99,7 +109,7 @@ gets **its own Vercel project**.
 
 ### 4. First run
 1. Open `your-site.vercel.app/admin` → log in with the owner's email/password.
-2. **⚙️ Налаштування** → title, subtitle, date & time of the party → Зберегти.
+2. **⚙️ Налаштування** → title, subtitle, date & time of the party, countdown on/off → Зберегти.
 3. **+ Подарунок** (one by one, with photo upload) or **📜 JSON** (bulk).
 4. Share the normal link (without `/admin`) with guests. 🎉
 
